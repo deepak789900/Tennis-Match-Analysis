@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Selection Committee</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #eef2f3, #8e9eab);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #00264d;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #004085;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        table {
+            width: 90%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        th {
+            background: linear-gradient(135deg, #5cb85c, #4cae4c);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        td {
+            background: #ffffff;
+            transition: background 0.3s;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        tr:nth-child(even) td {
+            background: #f8f9fa;
+        }
+
+        tr:hover td {
+            background: #fff3cd;
+        }
+
+        .numeric {
+            font-family: 'Courier New', Courier, monospace;
+            color: #2c3e50;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .best-player {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            padding: 25px;
+            background: linear-gradient(135deg, #d1e7ff, #b6d4fe);
+            border-radius: 10px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 1.6;
+            color: #003366;
+        }
+
+        .highlighted-number {
+            color: #d9534f;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.3rem;
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #0069d9, #004085);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 25px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1.2px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .button:hover {
+            background: linear-gradient(135deg, #004085, #002752);
+            transform: scale(1.05);
+        }
+
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        .graph-container1 {
+            margin-top: 40px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .graph-container2 {
+            margin-top: 40px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .graph1 {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .graph2 {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Player Selection Committee Dashboard</h1>
+
+    <!-- Player Averages Section -->
+    <h2>Player Averages</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Average Player Speed (km/h)</th>
+                <th>Player's Average Shot Speed (km/h)</th>
+            </tr>
+        </thead>
+        <tbody id="player-averages">
+            <!-- Data will be dynamically inserted here -->
+        </tbody>
+    </table>
+     <!-- Graphs Section -->
+    <div class="graph-container1">
+        <h2>Statistical Analsyis</h2>
+        <div>
+            <img id="player-speed-graph" class="graph1" src="" alt="Player Speed Comparison Graph">
+        </div> 
+        
+    </div>
+        
+    <!-- Select Best Player Button -->
+    <button class="button" id="select-best-player">Select Best Player Based on Average Shot Speed</button>
+
+    <!-- Best Player Based on Shot Speed Section -->
+    <div class="best-player" id="best-player">
+        <!-- Data will be dynamically inserted here -->
+    </div>
+
+    <!-- Maximum Speeds Section -->
+    <div class="best-player" id="max-speeds" style="display: none;">
+        <!-- Data will be dynamically inserted here -->
+    </div>
+
+    <div>
+        <img id="player-bar-graph" class="graph2" src="" alt="Player shot speed Comparison Graph">
+    </div>
+    
+    <div>
+        <img id="shot-speed-over-time" class="graph2" src="" alt="Player shot speed Comparison Graph">
+    </div>
+    <div id="feedback"></div>
+
+   
+
+    <script>
+        $(document).ready(function () {
+            // Fetch and display averages for both players
+            $.getJSON("/api/player-averages", function (data) {
+                const averagesTable = $("#player-averages");
+                averagesTable.empty();
+
+                // Add Player 1 data
+                averagesTable.append(`
+                    <tr>
+                        <td>Player 1</td>
+                        <td class="numeric">${data.player_1_average_speed.toFixed(2)}</td>
+                        <td class="numeric">${data.player_1_average_shot_speed.toFixed(2)}</td>
+                    </tr>
+                `);
+
+                // Add Player 2 data
+                averagesTable.append(`
+                    <tr>
+                        <td>Player 2</td>
+                        <td class="numeric">${data.player_2_average_speed.toFixed(2)}</td>
+                        <td class="numeric">${data.player_2_average_shot_speed.toFixed(2)}</td>
+                    </tr>
+                `);
+            });
+
+            // Fetch and display the best player based on average shot speed when button is clicked
+            $("#select-best-player").click(function () {
+                $.getJSON("/api/best-player-by-shot-speed", function (data) {
+                    const bestPlayerDiv = $("#best-player");
+                    bestPlayerDiv.empty();
+
+                    bestPlayerDiv.append(`
+                        <h3>The Best Player Based on Average Shot Speed</h3>
+                        <p><strong>${data.best_player}</strong> has the highest average shot speed.</p>
+                        <p>Player 1's Average Shot Speed: <span class="highlighted-number">${data.player_1_avg_shot_speed.toFixed(2)}</span> km/h</p>
+                        <p>Player 2's Average Shot Speed: <span class="highlighted-number">${data.player_2_avg_shot_speed.toFixed(2)}</span> km/h</p>
+                    `);
+
+                    // Fetch and display maximum speeds for the best player
+                    $.getJSON("/api/best-player-max-speeds", function (maxData) {
+                        const maxSpeedsDiv = $("#max-speeds");
+                        maxSpeedsDiv.show();
+                        maxSpeedsDiv.empty();
+
+                        maxSpeedsDiv.append(`
+                            <h3>Maximum Speeds of the Best Player</h3>
+                            <p>Best Player: <strong>${maxData.best_player}</strong></p>
+                            <p>Maximum Player Speed: <span class="highlighted-number">${maxData.max_player_speed.toFixed(2)}</span> km/h</p>
+                            <p>Maximum Shot Speed: <span class="highlighted-number">${maxData.max_shot_speed.toFixed(2)}</span> km/h</p>
+                        `);
+                    });
+                });
+                $.get("/api/player-performance-feedback", function (data) {
+                    let feedbackHtml = `
+                        <h2>Feedback</h2>
+                        <h3>Player 1:</h3>
+                        <ul>${data.player_1_feedback.map(f => `<li>${f}</li>`).join('')}</ul>
+                        <h3>Player 2:</h3>
+                        <ul>${data.player_2_feedback.map(f => `<li>${f}</li>`).join('')}</ul>
+                    `;
+                    $("#feedback").html(feedbackHtml);
+                });
+
+                $("#player-bar-graph").attr("src", "/api/player-shot-speed-bar");
+                $("#shot-speed-over-time").attr("src", "/api/total_shots_per_player");
+                
+                
+            });
+
+            // Load and display graphs
+            $("#player-speed-graph").attr("src", "/api/player-comparison-graph");
+            
+         
+        });
+    </script>
+</body>
+</html>
