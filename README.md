@@ -52,7 +52,8 @@ python tennis_analysis.py --input video.mp4
 - Upload a tennis match video or use a live camera feed.  
 - The system detects **players and ball movement** in real time.  
 - Key performance metrics such as **speed, movement patterns, and shot intensity** are displayed.  
-- Coaches and players can use these insights to improve **training and strategy**.  
+- Coaches and players can use these insights to improve **training and strategy**.
+
 
 ## **Results & Accuracy**  
 📌 **Player detection accuracy:** ~90%  
